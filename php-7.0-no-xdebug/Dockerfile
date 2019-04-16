@@ -16,7 +16,8 @@ RUN apt-get update \
   && docker-php-ext-install pdo_mysql \
   && docker-php-ext-install json \
   && docker-php-ext-install intl \
-  && docker-php-ext-install opcache
+  && docker-php-ext-install opcache \
+  && docker-php-ext-install bcmath
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN ln -s /usr/bin/nodejs /usr/bin/node

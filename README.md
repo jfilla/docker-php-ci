@@ -23,6 +23,7 @@ These images contain the following additions to the vanilla PHP images:
    * zip
    * gd
    * intl
+   * bcmath
 
 
 ## Pull images
