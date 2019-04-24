@@ -16,7 +16,8 @@ RUN apt-get update \
   && docker-php-ext-install pdo_mysql \
   && docker-php-ext-install json \
   && docker-php-ext-install intl \
-  && docker-php-ext-install opcache
+  && docker-php-ext-install opcache \
+  && docker-php-ext-install bcmath
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
