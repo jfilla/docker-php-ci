@@ -18,7 +18,8 @@ RUN apt-get update \
   && docker-php-ext-install intl \
   && docker-php-ext-install opcache \
   && docker-php-ext-install bcmath \
-  && docker-php-ext-install sockets
+  && docker-php-ext-install sockets \
+  && docker-php-ext-install imap
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
 RUN apt-get install -y nodejs
