@@ -1,6 +1,6 @@
 # PHP CI Docker images
 
-This repository contains Docker images for PHP 5.6 and higher which are based on the [official PHP Docker images](https://hub.docker.com/r/_/php/). These images were created specifically to use them for continious integration (Gitlab CI specifically), but they can be used for other purposes too.
+This repository contains Docker images for PHP 7.0 and higher which are based on the [official PHP Docker images](https://hub.docker.com/r/_/php/). These images were created specifically to use them for continious integration (Gitlab CI specifically), but they can be used for other purposes too.
 
 These images contain the following additions to the vanilla PHP images:
 
@@ -24,6 +24,8 @@ These images contain the following additions to the vanilla PHP images:
    * gd
    * intl
    * bcmath
+   * sockets
+   * imap
 
 
 ## Pull images
@@ -32,9 +34,9 @@ The images are stored on [Docker Hub](https://hub.docker.com/r/packetery/ci/). U
 
 The following tags are available:
 
-* 5.6
 * 7.0
 * 7.1
+* 7.1-incl-docker
 
 ## Build process
 
