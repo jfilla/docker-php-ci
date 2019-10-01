@@ -1,12 +1,18 @@
-FROM php:7.0
+FROM php:7.1-jessie
 
 RUN apt-get update \
-	&& apt-get install -y libcurl4-openssl-dev sudo git libxslt-dev mercurial subversion zlib1g-dev graphviz zip libmcrypt-dev libicu-dev g++ libpng-dev libgd-dev libc-client-dev libkrb5-dev rsync \
-	&& apt-get clean \
+	&& apt-get install -y software-properties-common apt-transport-https ca-certificates curl \
+	#add docker-ce repo apt key
+	&& curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - \
+	&& add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable" \
+	#remove old versions of nodejs & npm & add nodejs 10.x repo
+	&& curl -sSL https://deb.nodesource.com/setup_10.x | bash - \
+	&& apt-get update \
+	&& apt-get install -y libcurl4-openssl-dev sudo git libxslt-dev mercurial subversion zlib1g-dev graphviz zip libmcrypt-dev libicu-dev g++ libpng-dev libgd-dev libc-client-dev libkrb5-dev gnupg2 nodejs docker-ce \
 	&& docker-php-ext-install soap \
 	&& docker-php-ext-install zip \
 	&& docker-php-ext-install xsl \
-	&& docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+	&& docker-php-ext-configure gd --with-jpeg-dir=/usr/include/ \
 	&& docker-php-ext-install gd \
 	&& docker-php-ext-install mcrypt \
 	&& docker-php-ext-install mbstring \
@@ -20,20 +26,21 @@ RUN apt-get update \
 	&& docker-php-ext-install bcmath \
 	&& docker-php-ext-install sockets \
 	&& docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-	&& docker-php-ext-install imap
+	&& docker-php-ext-install imap \
+	#remove libraries for php extension compilation and old versions of nodejs & npm
+	&& apt-get -y purge \
+		libpng-dev \
+		zlib1g-dev \
+		libcurl4-openssl-dev \
+		libxslt-dev \
+		libmcrypt-dev \
+		libicu-dev \
+		libgd-dev \
+		libc-client-dev \
+		libkrb5-dev \
+	&& apt-get clean
 
-#remove libraries for php extension compilation
-RUN apt-get -y purge \
-	libc-client-dev \
-	libicu-dev \
-	libkrb5-dev \
-	libpng-dev \
-	zlib1g-dev
-
-#install node & npm & gulp & grunt globally
-RUN apt-get remove --purge nodejs
-RUN curl -sSL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
+#install npm & gulp & grunt & bower
 RUN npm install -g \
 	gulp-cli \
 	grunt-cli \
