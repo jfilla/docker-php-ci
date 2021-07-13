@@ -37,6 +37,7 @@ The following tags are available:
 * 7.0
 * 7.1
 * 7.1-incl-docker
+* 8.0-incl-docker
 
 ## Build process
 
