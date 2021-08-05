@@ -20,7 +20,8 @@ RUN apt-get update \
 	&& docker-php-ext-install bcmath \
 	&& docker-php-ext-install sockets \
 	&& docker-php-ext-configure imap --with-kerberos --with-imap-ssl \
-	&& docker-php-ext-install imap
+	&& docker-php-ext-install imap \
+	&& pecl install redis && docker-php-ext-enable redis 
 
 #remove libraries for php extension compilation
 RUN apt-get -y purge \
@@ -40,7 +41,7 @@ RUN npm install -g \
 	grunt-cli \
 	bower
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer && composer self-update --1
 RUN echo '{ "allow_root": true, "storage": {"packages": ".bower-cache/"} }' > ~/.bowerrc
 RUN echo 'cache=.node-cache' > ~/.npmrc
 RUN echo '{ "config": { "cache-dir": ".composer-cache" } }' > ~/.composer/composer.json
